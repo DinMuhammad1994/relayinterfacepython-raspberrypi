@@ -1,0 +1,62 @@
+import RPi.GPIO as GPIO
+import time
+
+# Set up GPIO mode
+GPIO.setmode(GPIO.BCM)
+
+# Define relay pins
+relay_pins = {
+    "buzzer": 22,
+    "fan": 27,
+    "light1": 17,
+    "light2": 23
+}
+
+# Initialize relay pins as outputs
+for pin in relay_pins.values():
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.HIGH)  # Set all relays initially off (high)
+
+try:
+    while True:
+        print("Relay Control:")
+        print("1: Turn ON Buzzer")
+        print("2: Turn OFF Buzzer")
+        print("3: Turn ON Fan")
+        print("4: Turn OFF Fan")
+        print("5: Turn ON Light 1")
+        print("6: Turn OFF Light 1")
+        print("7: Turn ON Light 2")
+        print("8: Turn OFF Light 2")
+        print("0: Exit")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == '1':
+            GPIO.output(relay_pins["buzzer"], GPIO.LOW)
+        elif choice == '2':
+            GPIO.output(relay_pins["buzzer"], GPIO.HIGH)
+        elif choice == '3':
+            GPIO.output(relay_pins["fan"], GPIO.LOW)
+        elif choice == '4':
+            GPIO.output(relay_pins["fan"], GPIO.HIGH)
+        elif choice == '5':
+            GPIO.output(relay_pins["light1"], GPIO.LOW)
+        elif choice == '6':
+            GPIO.output(relay_pins["light1"], GPIO.HIGH)
+        elif choice == '7':
+            GPIO.output(relay_pins["light2"], GPIO.LOW)
+        elif choice == '8':
+            GPIO.output(relay_pins["light2"], GPIO.HIGH)
+        elif choice == '0':
+            break
+        else:
+            print("Invalid choice. Please enter a valid option.")
+
+except KeyboardInterrupt:
+    print("Program terminated by user.")
+
+finally:
+    # Cleanup GPIO on program exit
+    GPIO.cleanup()
+
